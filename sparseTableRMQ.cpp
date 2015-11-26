@@ -30,7 +30,7 @@ template<class T> T lcm(T a, T b) { return a * b / gcd(a, b); }
 
 const int LOGMAX = log2(MAXX)+1;
 int a[MAXX], n, ST[MAXX][LOGMAX];	//ST[i][j] is the index of the minimum value in the sub array 
-					//starting at i having length 2j
+					//starting at i having length 2^j
 
 void process(){
 	for(int i=0;i<n;i++) ST[i][0] = i;
