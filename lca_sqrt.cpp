@@ -29,7 +29,7 @@ template<class T> T gcd(T a, T b) { return b ? gcd(b, a % b) : a; }
 template<class T> T lcm(T a, T b) { return a * (b / gcd(a, b)); }
 
 int n, SQRT, par[MAXX], ht[MAXX], rt[MAXX];
-vector<int> G;
+vector<int> G[MAXX];
 
 void dfs(int v, int p = -1){
 	if(p != -1) ht[v] = ht[p] + 1;
