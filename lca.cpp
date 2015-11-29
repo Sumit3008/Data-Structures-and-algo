@@ -43,7 +43,7 @@ void dfs(int v, int p = -1){
 
 int LCA(int u, int v){
 	if(ht[u] < ht[v]) swap(u, v);
-	for(int i = LOGMAX - 1;i >= 0;i--) if(par[u][i] != -1 && ht[par[u][i]] > ht[v]) u = par[u][i];
+	for(int i = LOGMAX - 1;i >= 0;i--) if(par[u][i] != -1 && ht[par[u][i]] >= ht[v]) u = par[u][i];
 	//now ht[u] == ht[v]
 	if(u == v) return u;
 	for(int i = LOGMAX - 1;i >= 0;i--) if(par[u][i] != par[v][i]) u = par[u][i], v = par[v][i];
