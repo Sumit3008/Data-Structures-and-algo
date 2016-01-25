@@ -1,0 +1,89 @@
+/*
+ * MO's algo
+ * Codeforces Round #136 (Div. 1) : Little Elephant and Array
+ */
+#include<bits/stdc++.h>
+
+#define IT(a,it) for(auto it=a.begin(); it != a.end(); it++)
+#define REV_IT(a,it) for(auto it=a.rbegin(); it != a.rend(); it++)
+#define LL long long
+#define LD long double
+#define MP make_pair
+#define FF first
+#define SS second
+#define PB push_back
+#define INF (int)(1e9)
+#define EPS (double)(1e-9)
+
+#ifndef ONLINE_JUDGE
+#  define LOG(x) cerr << #x << " = " << (x) << endl
+#else
+#  define LOG(x) 0
+#endif
+
+#define MAXX 500005
+
+using namespace std;
+
+typedef pair <int, int> pi_i;
+typedef pair<int, pi_i> pi_ii;
+
+int sqrrtt;
+
+bool cmp(pi_ii a, pi_ii b){
+	if(a.FF/sqrrtt != b.FF/sqrrtt) return a.FF < b.FF;
+	return a.SS.FF < b.SS.FF;
+	
+}
+
+template<class T> T gcd(T a, T b) { return b ? gcd(b, a % b) : a; }
+template<class T> T lcm(T a, T b) { return a * (b / gcd(a, b)); }
+
+int n, m, a[MAXX], ans[MAXX], anss;
+vector<pi_ii> Q;
+int mm[MAXX];
+
+inline void add(int idx){
+	if(a[idx] > n) return;
+	int vv = ++mm[a[idx]];
+	if(vv == a[idx]) anss++;
+	else if(vv == a[idx]+1) anss--;
+}
+
+inline void remove(int idx){
+	if(a[idx] > n) return;
+	int vv = --mm[a[idx]];
+	if(vv == a[idx]) anss++;
+	else if(vv == a[idx]-1) anss--;
+}
+
+int main(){
+	ios_base::sync_with_stdio(false);cin.tie(0);cout.tie(0);
+	//freopen("out.txt","w",stdout);
+	
+	cin >> n >> m;
+	sqrrtt = sqrt(n);
+	for(int i = 0;i < n;i++) cin >> a[i];
+	for(int i = 0;i < m;i++){
+		int ll, rr;
+		cin >> ll >> rr;ll--;rr--;
+		Q.PB(MP(ll, MP(rr, i)));
+	}
+	sort(Q.begin(), Q.end(), cmp);
+	
+	int CL = 0, CR = 0;
+	for(int i = 0;i < m;i++){
+		int L = Q[i].FF, R = Q[i].SS.FF;
+		while(CL < L) remove(CL), CL++;
+		while(CL > L) add(CL-1), CL--;
+		while(CR <= R) add(CR), CR++;
+		while(CR > R+1) remove(CR-1), CR--;
+		ans[Q[i].SS.SS] = anss;
+	}
+	for(int i = 0;i < m;i++) cout << ans[i] << endl;
+
+return 0;
+}
+
+//lower(==, lowestIdx), lower(>)
+//upper(>)
